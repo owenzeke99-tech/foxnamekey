@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoxName - Premium Key System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#02070d;
+    --card:rgba(4,14,24,.86);
+    --blue:#19bfff;
+    --cyan:#62e7ff;
+    --deep:#0879b8;
+    --text:#f5fbff;
+    --muted:#7190a3;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    color:var(--text);
+    font-family:Poppins,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 50% 40%,rgba(0,156,255,.15),transparent 35%),
+        radial-gradient(circle at 10% 90%,rgba(0,100,180,.12),transparent 30%),
+        #02070d;
+}
+
+/* BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:-100px;
+    background-image:
+        linear-gradient(rgba(25,191,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(25,191,255,.035) 1px,transparent 1px);
+    background-size:45px 45px;
+    animation:gridMove 12s linear infinite;
+    pointer-events:none;
+}
+
+@keyframes gridMove{
+    from{transform:translate(0,0)}
+    to{transform:translate(45px,45px)}
+}
+
+/* GLOW ORBS */
+.orb{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(5px);
+    pointer-events:none;
+    opacity:.35;
+}
+
+.orb.one{
+    width:230px;
+    height:230px;
+    background:#008cff;
+    top:-100px;
+    left:-80px;
+    animation:orbFloat 7s ease-in-out infinite;
+}
+
+.orb.two{
+    width:280px;
+    height:280px;
+    background:#00c8ff;
+    right:-130px;
+    bottom:-120px;
+    animation:orbFloat 9s ease-in-out infinite reverse;
+}
+
+@keyframes orbFloat{
+    0%,100%{transform:translate(0,0)}
+    50%{transform:translate(25px,-30px)}
+}
+
+/* PARTICLES */
+.particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 12px var(--cyan);
+    opacity:.5;
+    animation:particleMove linear infinite;
+}
+
+.particle:nth-child(1){left:8%;top:80%;animation-duration:8s}
+.particle:nth-child(2){left:18%;top:20%;animation-duration:11s}
+.particle:nth-child(3){left:30%;top:70%;animation-duration:9s}
+.particle:nth-child(4){left:45%;top:15%;animation-duration:13s}
+.particle:nth-child(5){left:60%;top:85%;animation-duration:10s}
+.particle:nth-child(6){left:75%;top:25%;animation-duration:12s}
+.particle:nth-child(7){left:88%;top:65%;animation-duration:9s}
+.particle:nth-child(8){left:95%;top:12%;animation-duration:14s}
+
+@keyframes particleMove{
+    0%{transform:translateY(30px);opacity:0}
+    20%{opacity:.6}
+    80%{opacity:.6}
+    100%{transform:translateY(-150px);opacity:0}
+}
+
+/* MAIN CARD */
+.card{
+    position:relative;
+    width:min(430px,92vw);
+    padding:32px 26px 22px;
+    border-radius:28px;
+    background:var(--card);
+    border:1px solid rgba(48,198,255,.22);
+    box-shadow:
+        0 0 0 1px rgba(0,180,255,.04),
+        0 20px 80px rgba(0,0,0,.65),
+        0 0 60px rgba(0,155,255,.10);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    text-align:center;
+    animation:cardIn .8s ease forwards;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:28px;
+    padding:1px;
+    background:linear-gradient(
+        135deg,
+        rgba(80,220,255,.65),
+        transparent 35%,
+        transparent 65%,
+        rgba(0,140,255,.45)
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+}
+
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.96);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+/* TOP LINE */
+.top-line{
+    position:absolute;
+    top:0;
+    left:50%;
+    width:90px;
+    height:2px;
+    transform:translateX(-50%);
+    background:var(--cyan);
+    box-shadow:
+        0 0 10px var(--cyan),
+        0 0 30px var(--blue);
+    border-radius:10px;
+}
+
+/* =========================
+   AVATAR — EXACT CENTER
+   ========================= */
+
+.avatar-area{
+    position:relative;
+    width:190px;
+    height:190px;
+    margin:0 auto 18px;
+    display:block;
+    isolation:isolate;
+    animation:avatarFloat 4s ease-in-out infinite;
+}
+
+@keyframes avatarFloat{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-7px);
+    }
+}
+
+/* ALL RINGS SHARE THE SAME CENTER */
+.ring{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    pointer-events:none;
+    box-sizing:border-box;
+}
+
+.ring.one{
+    width:190px;
+    height:190px;
+    border:2px solid rgba(55,215,255,.65);
+    border-left-color:transparent;
+    border-bottom-color:rgba(0,125,255,.25);
+    box-shadow:
+        0 0 12px rgba(25,191,255,.45),
+        inset 0 0 12px rgba(25,191,255,.12);
+    animation:ringRotate 9s linear infinite;
+}
+
+.ring.two{
+    width:168px;
+    height:168px;
+    border:1px dashed rgba(95,224,255,.55);
+    box-shadow:0 0 16px rgba(0,175,255,.16);
+    animation:ringRotateReverse 13s linear infinite;
+}
+
+.ring.three{
+    width:150px;
+    height:150px;
+    border:1px solid rgba(0,170,255,.45);
+    border-top-color:transparent;
+    border-right-color:rgba(70,220,255,.7);
+    animation:ringRotate 7s linear infinite;
+}
+
+@keyframes ringRotate{
+    from{
+        transform:translate(-50%,-50%) rotate(0deg);
+    }
+    to{
+        transform:translate(-50%,-50%) rotate(360deg);
+    }
+}
+
+@keyframes ringRotateReverse{
+    from{
+        transform:translate(-50%,-50%) rotate(0deg);
+    }
+    to{
+        transform:translate(-50%,-50%) rotate(-360deg);
+    }
+}
+
+/* AVATAR IS ALSO ABSOLUTELY CENTERED */
+.avatar{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:128px;
+    height:128px;
+    margin:0;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    overflow:hidden;
+    z-index:10;
+
+    background:
+        radial-gradient(circle at 50% 45%,#ffe1d4 0 30%,transparent 31%),
+        linear-gradient(145deg,#162b3c,#07121d);
+
+    border:2px solid rgba(104,230,255,.8);
+
+    box-shadow:
+        0 0 15px rgba(25,191,255,.65),
+        0 0 45px rgba(0,145,255,.28),
+        inset 0 0 25px rgba(0,0,0,.55);
+
+    animation:avatarPulse 3s ease-in-out infinite;
+}
+
+@keyframes avatarPulse{
+    0%,100%{
+        box-shadow:
+            0 0 15px rgba(25,191,255,.65),
+            0 0 45px rgba(0,145,255,.28),
+            inset 0 0 25px rgba(0,0,0,.55);
+    }
+    50%{
+        box-shadow:
+            0 0 24px rgba(25,191,255,.9),
+            0 0 65px rgba(0,145,255,.4),
+            inset 0 0 25px rgba(0,0,0,.55);
+    }
+}
+
+/* ANIME GIRL */
+.avatar .face{
+    position:absolute;
+    width:70px;
+    height:76px;
+    left:29px;
+    top:34px;
+    background:#ffd8c9;
+    border-radius:48% 48% 45% 45%;
+    z-index:4;
+    box-shadow:inset 0 -5px 8px rgba(220,130,120,.13);
+}
+
+.avatar .hair{
+    position:absolute;
+    width:102px;
+    height:108px;
+    left:13px;
+    top:4px;
+    background:
+        linear-gradient(135deg,#172b3c,#07131f 70%);
+    border-radius:52% 52% 45% 45%;
+    z-index:5;
+    box-shadow:inset -10px -8px 15px rgba(0,0,0,.3);
+}
+
+.avatar .hair::after{
+    content:"";
+    position:absolute;
+    width:26px;
+    height:70px;
+    right:-2px;
+    top:40px;
+    background:#091a28;
+    border-radius:0 60% 60% 30%;
+    transform:rotate(-8deg);
+}
+
+.avatar .face{
+    z-index:6;
+}
+
+.avatar .eye{
+    position:absolute;
+    top:30px;
+    width:9px;
+    height:12px;
+    background:#182f45;
+    border-radius:50%;
+    box-shadow:0 0 3px rgba(0,80,130,.5);
+}
+
+.avatar .eye.left{
+    left:15px;
+}
+
+.avatar .eye.right{
+    right:15px;
+}
+
+.avatar .eye::after{
+    content:"";
+    position:absolute;
+    width:3px;
+    height:3px;
+    left:2px;
+    top:2px;
+    background:white;
+    border-radius:50%;
+}
+
+.avatar .mouth{
+    position:absolute;
+    width:12px;
+    height:6px;
+    left:29px;
+    top:52px;
+    border-bottom:2px solid #c66c79;
+    border-radius:50%;
+}
+
+.avatar .bang{
+    position:absolute;
+    z-index:8;
+    background:#102538;
+    transform-origin:top center;
+}
+
+.avatar .b1{
+    width:30px;
+    height:56px;
+    left:29px;
+    top:4px;
+    border-radius:0 0 80% 30%;
+    transform:rotate(18deg);
+}
+
+.avatar .b2{
+    width:28px;
+    height:60px;
+    left:50px;
+    top:0;
+    border-radius:0 0 70% 40%;
+    transform:rotate(-5deg);
+}
+
+.avatar .b3{
+    width:24px;
+    height:52px;
+    left:70px;
+    top:6px;
+    border-radius:0 0 30% 80%;
+    transform:rotate(-20deg);
+}
+
+.avatar .ribbon{
+    position:absolute;
+    z-index:9;
+    right:9px;
+    top:20px;
+    width:22px;
+    height:22px;
+    background:#21c9ff;
+    clip-path:polygon(50% 0,100% 35%,72% 50%,100% 100%,50% 72%,0 100%,28% 50%,0 35%);
+    filter:drop-shadow(0 0 5px #1abfff);
+}
+
+/* TITLE */
+.title{
+    font-family:Orbitron,sans-serif;
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:6px;
+    line-height:1;
+    background:linear-gradient(90deg,#fff,#55dfff,#fff);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:titleShine 4s linear infinite;
+}
+
+@keyframes titleShine{
+    to{background-position:200% center}
+}
+
+.subtitle{
+    margin-top:9px;
+    color:#7291a5;
+    font-size:12px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+
+/* STATUS */
+.status{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin:20px 0;
+    color:#8ceaff;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:2px;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#30d9ff;
+    box-shadow:0 0 10px #30d9ff;
+    animation:statusBlink 1.4s ease-in-out infinite;
+}
+
+@keyframes statusBlink{
+    50%{
+        opacity:.35;
+        transform:scale(.7);
+    }
+}
+
+/* KEY BOX */
+.key-box{
+    position:relative;
+    padding:17px 16px;
+    border-radius:15px;
+    background:rgba(0,11,20,.75);
+    border:1px solid rgba(55,204,255,.22);
+    box-shadow:inset 0 0 25px rgba(0,155,255,.035);
+    overflow:hidden;
+}
+
+.key-box::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:1px;
+    background:linear-gradient(90deg,transparent,#53e5ff,transparent);
+    animation:keyScan 3s linear infinite;
+}
+
+@keyframes keyScan{
+    to{left:100%}
+}
+
+.key-label{
+    color:#638397;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:3px;
+    margin-bottom:9px;
+}
+
+.key-text{
+    color:#b8f2ff;
+    font-family:monospace;
+    font-size:13px;
+    word-break:break-all;
+    text-shadow:0 0 8px rgba(50,210,255,.3);
+}
+
+/* COPY BUTTON */
+.copy-btn{
+    position:relative;
+    width:100%;
+    margin-top:13px;
+    padding:14px;
+    border:0;
+    border-radius:13px;
+    cursor:pointer;
+
+    color:#00111a;
+    background:linear-gradient(135deg,#4de3ff,#0da8e8);
+
+    font-family:Orbitron,sans-serif;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2px;
+
+    box-shadow:
+        0 0 20px rgba(25,191,255,.25),
+        inset 0 1px rgba(255,255,255,.45);
+
+    transition:.25s ease;
+    overflow:hidden;
+}
+
+.copy-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:70%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.55),
+        transparent
+    );
+    transform:skewX(-20deg);
+    animation:buttonShine 3.2s infinite;
+}
+
+@keyframes buttonShine{
+    0%,45%{left:-120%}
+    70%,100%{left:150%}
+}
+
+.copy-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 0 30px rgba(25,191,255,.48),
+        0 8px 30px rgba(0,140,220,.18);
+}
+
+.copy-btn:active{
+    transform:scale(.97);
+}
+
+/* FEATURES */
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:18px;
+}
+
+.feature{
+    padding:11px 5px;
+    border-radius:12px;
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(100,210,255,.08);
+    transition:.25s ease;
+}
+
+.feature:hover{
+    transform:translateY(-3px);
+    border-color:rgba(50,210,255,.3);
+    background:rgba(30,190,255,.05);
+}
+
+.feature-icon{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.feature-name{
+    color:#6f91a4;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:1.5px;
+}
+
+/* FOOTER */
+.footer{
+    margin-top:18px;
+    color:#405b6c;
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+/* RESPONSIVE */
+@media(max-width:430px){
+    .card{
+        padding:28px 19px 20px;
+    }
+
+    .avatar-area{
+        width:175px;
+        height:175px;
+    }
+
+    .ring.one{
+        width:175px;
+        height:175px;
+    }
+
+    .ring.two{
+        width:155px;
+        height:155px;
+    }
+
+    .ring.three{
+        width:140px;
+        height:140px;
+    }
+
+    .title{
+        font-size:29px;
+        letter-spacing:5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+<div class="particles">
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+</div>
+
+<main class="card">
+    <div class="top-line"></div>
+
+    <!-- AVATAR -->
+    <div class="avatar-area">
+
+        <div class="ring one"></div>
+        <div class="ring two"></div>
+        <div class="ring three"></div>
+
+        <!-- EXACT CENTER -->
+        <div class="avatar">
+            <div class="hair"></div>
+
+            <div class="face">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="mouth"></div>
+            </div>
+
+            <div class="bang b1"></div>
+            <div class="bang b2"></div>
+            <div class="bang b3"></div>
+
+            <div class="ribbon"></div>
+        </div>
+
+    </div>
+
+    <h1 class="title">FOXNAME</h1>
+    <p class="subtitle">Premium Key System</p>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+    </div>
+
+    <div class="key-box">
+        <div class="key-label">YOUR PREMIUM KEY</div>
+
+        <div class="key-text" id="keyText">
+            FoxNameKeyGiaue - Qte23HdkeoheuHapquekx
+        </div>
+    </div>
+
+    <button class="copy-btn" id="copyBtn">
+        COPY KEY
+    </button>
+
+    <div class="features">
+        <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-name">FAST</div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-name">SECURE</div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">✦</div>
+            <div class="feature-name">PREMIUM</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        FOXNAME KEY SYSTEM • PREMIUM ACCESS
+    </div>
+</main>
+
+<script>
+const key = "FoxNameKeyGiaue - Qte23HdkeoheuHapquekx";
+const button = document.getElementById("copyBtn");
+
+button.addEventListener("click", async () => {
+
+    try{
+        await navigator.clipboard.writeText(key);
+    }catch(e){
+        const area = document.createElement("textarea");
+        area.value = key;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+    }
+
+    button.textContent = "✓ KEY COPIED";
+
+    setTimeout(() => {
+        button.textContent = "COPY KEY";
+    }, 1800);
+});
+</script>
+
+</body>
+</html>
